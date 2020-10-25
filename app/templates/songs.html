@@ -2,8 +2,19 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <h1>Песни</h1>
+        <div class="col-12"><h1>Песни</h1></div>
+        {% for s in songs %}
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
 
+                <div class="card-body">
+                    <h5 class="card-title">{{ s.title }}</h5>
+                    <h6>{{ s.author }}</h6>
+                    <p>{{ s.text }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

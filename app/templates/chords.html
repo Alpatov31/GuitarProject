@@ -3,7 +3,15 @@
 <div class="container">
     <div class="row">
         <h1>Аккорды</h1>
+        {% for c in chrds %}
+        <div class="card" style="width: 18rem;">
 
+            <div class="card-body">
+                <h5 class="card-title">{{ c.title }}</h5>
+                <p>{{ c.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
