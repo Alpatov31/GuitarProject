@@ -1,0 +1,28 @@
+{% extends "base_login.html" %}
+{% block content %}
+<div class="fadeIn first">
+    <img src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" id="icon"
+         alt="User Icon"/>
+</div>
+
+<!-- Login Form -->
+<form method="post">
+    <input type="text" id="username" class="fadeIn second" name="username"
+           placeholder="Введите ваше имя пользователя">
+    <input type="text" id="login" class="fadeIn second" name="login"
+           placeholder="Введите логин(Почта или Телефон)">
+    <input type="password" id="password" class="fadeIn third" name="password" placeholder="Введите пароль">
+    <input type="password" id="password2" class="fadeIn third" name="password2" placeholder="Повторите пароль">
+    {% for e in errors %}
+    <div class="alert alert-danger m-3" role="alert">
+        {{ e }}
+    </div>
+    {% endfor %}
+    <input type="submit" class="fadeIn fourth" value="Зарегестрироваться">
+</form>
+
+<!-- Remind Passowrd -->
+<div id="formFooter">
+    <a class="underlineHover" href="/login">Войти</a>
+</div>
+{% endblock %}

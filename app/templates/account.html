@@ -3,7 +3,26 @@
 <div class="container">
     <div class="row">
         <h1>Профиль</h1>
-
+        <table class="table table-dark">
+            <tbody>
+            <tr>
+                <th scope="row">Имя пользователя</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Почта</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Уровень</th>
+                <td>{{ user.level }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Прогресс</th>
+                <td>{{ user.points }}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}
