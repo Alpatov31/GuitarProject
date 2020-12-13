@@ -51,7 +51,7 @@ class Song(db.Model):
 class Chord(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128))
-    # image =
+    image = db.Column(db.String(64))
     # sound =
     description = db.Column(db.String(128))
     points = db.Column(db.Integer)

@@ -1,8 +1,10 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
+import os
 from app.models import Chord, User, Song, Article
 from datetime import datetime
 from flask_login import current_user, login_user, login_required, logout_user
+from werkzeug.utils import secure_filename
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -68,6 +70,24 @@ def chords():
     chrds = Chord.query.all()
     return render_template("chords.html", chrds=chrds)
 
+@app.route('/add_chord', methods=["GET", "POST"])
+@login_required
+def add_chord():
+    if request.method == "POST":
+        title = request.form["title"]
+        description = request.form["description"]
+        file = request.files["file"]
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # chords_folder = os.path.join(app.config['UPLOAD_FOLDER'], "chords")
+        # file.save(os.path.join(chords_folder, filename))
+        c = Chord(title=title, points=0, description=description, image=file.filename)
+        db.session.add(c)
+        db.session.commit()
+        return redirect("/chords")
+    else:
+        return render_template("add_chord.html")
+
 
 @app.route('/songs')
 def songs():
@@ -77,13 +97,35 @@ def songs():
 
 @app.route('/articles')
 def articles():
-    return render_template("articles.html")
+    articles = Article.query.all()
+    return render_template("articles.html", articles=articles)
 
+
+@app.route('/add_article', methods=["GET", "POST"])
+@login_required
+def add_article():
+    if request.method == "POST":
+        title = request.form["title"]
+        # theme = request.form["theme"]
+        text = request.form["text"]
+        a = Article(title=title, text=text, points=0, author=current_user.username)
+        db.session.add(a)
+        db.session.commit()
+        return redirect("/articles")
+    else:
+        return render_template("add_article.html")
+
+
+@app.route('/articles/<int:id>')
+def article(id):
+    a = Article.query.get(id)
+    return render_template("article.html", article=a)
 
 @app.route('/account')
 @login_required
 def account():
     return render_template("account.html", user=current_user)
+
 
 # @app.route('/add_snkrs', methods=["GET", "POST"])
 # def add_snkrs():
