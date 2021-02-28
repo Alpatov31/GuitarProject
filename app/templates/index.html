@@ -2,8 +2,19 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <h1>Главная</h1>
-
+        <h1 class="mx-auto my-4 title">Главная</h1>
+        {% for v in video %}
+        <div class="col-12">
+            <div class="card">
+                <div class="text-center" style="background-color: #8590AA;">
+                    <h1>{{ v.name }}</h1>
+                    <iframe width="560" height="315" src="{{ v.url }}" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

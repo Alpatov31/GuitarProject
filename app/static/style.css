@@ -1,0 +1,35 @@
+#name {
+    color: #8590AA;
+}
+
+#title {
+    color: #8590AA;
+}
+
+#text {
+    color: #8590AA;
+}
+
+#author {
+    color: #8590AA;
+}
+
+.navbar-brand {
+    color: #8590AA;
+}
+
+* {
+    color: #EAE7DC;
+}
+
+.card-body {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.btn-success {
+    border-color: #D8C3A5;
+}
+
+.title {
+    color: #8590AA;
+}

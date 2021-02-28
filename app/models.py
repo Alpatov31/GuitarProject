@@ -27,7 +27,6 @@ class User(db.Model, UserMixin):
 
 
 
-
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128))
@@ -55,6 +54,18 @@ class Chord(db.Model):
     # sound =
     description = db.Column(db.String(128))
     points = db.Column(db.Integer)
+    group = db.Column(db.Integer, default=1)
+
+class ChordLearned(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer)
+    chord_id = db.Column(db.Integer)
+
+class Video(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    url = db.Column(db.String(512))
+
 
 @login.user_loader
 def load_user(id):

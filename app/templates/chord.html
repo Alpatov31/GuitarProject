@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 id="title">{{ c.title }}</h1>
+            <h4 id="text">{{ c.description }}</h4>
+            <img src="/static/chords/{{ c.image }}" alt="" width="200"
+                 style="margin-left: auto; margin: block;">
+        </div>
+        <form method="post">
+            <button type="submit" class="btn btn-primary" style="background-color: #D8C3A5">Завершить</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -7,6 +7,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db') + "?check_same_thread=False"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    UPLOAD_FOLDER = "static"
+    UPLOAD_FOLDER = os.path.join(basedir, "app\\static")
+    CHORDS_FOLDER = os.path.join(basedir, "app\\static\\chords")
 
 

@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 import os
-from app.models import Chord, User, Song, Article
+from app.models import Chord, User, Song, Article, ChordLearned, Video
 from datetime import datetime
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
@@ -62,31 +62,54 @@ def logout():
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("index.html")
+    video = Video.query.all()
+    return render_template("index.html", video=video)
+
+
 
 
 @app.route('/chords')
 def chords():
     chrds = Chord.query.all()
-    return render_template("chords.html", chrds=chrds)
+    chrds_grouped = {}
+    chords_learned = []
+    for c in  ChordLearned.query.filter_by(user_id=current_user.id):
+        chords_learned.append(c.chord_id)
+    for c in chrds:
+        if c.group not in chrds_grouped.keys():
+            chrds_grouped[c.group] = []
+        chrds_grouped[c.group].append(c)
+    return render_template("chords.html", chrds_grouped=chrds_grouped, learned=chords_learned)
+
 
 @app.route('/add_chord', methods=["GET", "POST"])
 @login_required
 def add_chord():
     if request.method == "POST":
         title = request.form["title"]
+        group = request.form["group"]
         description = request.form["description"]
         file = request.files["file"]
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        file.save(os.path.join(app.config['CHORDS_FOLDER'], filename))
         # chords_folder = os.path.join(app.config['UPLOAD_FOLDER'], "chords")
         # file.save(os.path.join(chords_folder, filename))
-        c = Chord(title=title, points=0, description=description, image=file.filename)
+        c = Chord(title=title, points=0, description=description, image=file.filename, group=group)
         db.session.add(c)
         db.session.commit()
         return redirect("/chords")
     else:
         return render_template("add_chord.html")
+
+@app.route('/chords/<int:id>', methods=["GET", "POST"])
+def chord(id):
+    if request.method == "POST":
+        c = ChordLearned(user_id=current_user.id, chord_id=id)
+        db.session.add(c)
+        db.session.commit()
+    c = Chord.query.get(id)
+    return render_template("chord.html", c=c)
+
 
 
 @app.route('/songs')
@@ -121,11 +144,22 @@ def article(id):
     a = Article.query.get(id)
     return render_template("article.html", article=a)
 
+
+@app.route('/songs/<int:id>')
+def song(id):
+    s = Song.query.get(id)
+    return render_template("song.html", song=s)
+
+
 @app.route('/account')
 @login_required
 def account():
     return render_template("account.html", user=current_user)
 
+
+@app.route('/tuner')
+def tuner():
+    return render_template("tuner.html")
 
 # @app.route('/add_snkrs', methods=["GET", "POST"])
 # def add_snkrs():

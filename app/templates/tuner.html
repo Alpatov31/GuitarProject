@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1 id="name", class="mx-auto my-4">Тюнер</h1>
+        <script type="text/javascript">
+        function playSound(s) {
+            stopAll()
+            document.getElementById(s).play();
+        }
+
+        function stopSound(s) {
+            document.getElementById(s).pause();
+            document.getElementById(s).currentTime = 0;
+        }
+
+        function stopAll() {
+            stopSound('sound1')
+            stopSound('sound2')
+            stopSound('sound3')
+            stopSound('sound4')
+            stopSound('sound5')
+            stopSound('sound6')
+        }
+
+
+
+
+
+
+
+        </script>
+        <img src="/static/guitar.png" alt="Tuner" usemap="#tuner">
+
+        <map name="tuner">
+            <area shape="circle" coords="510,365,60" alt="e2" onClick="playSound('sound1')">
+            <area shape="circle" coords="490,245,60" alt="e2" onClick="playSound('sound2')">
+            <area shape="circle" coords="480,125,60" alt="e2" onClick="playSound('sound3')">
+            <area shape="circle" coords="315,125,60" alt="e2" onClick="playSound('sound4')">
+            <area shape="circle" coords="305,245,60" alt="e2" onClick="playSound('sound5')">
+            <area shape="circle" coords="295,365,60" alt="e2" onClick="playSound('sound6')">
+            <area shape="circle" coords="662,672,103" alt="e2" onClick="stopAll()">
+        </map>
+
+        <ul style="visibility: hidden">
+            <li>
+                <audio id="sound1" src="https://tuneronline.ru/audio/e4.mp3" type="audio/mpeg" loop=""></audio>
+                <button type="button" class="btn btn-primary" onClick="playSound('sound1')">Play</button>
+                <button type="button" class="btn btn-primary" onClick="stopSound('sound1')">Stop</button>
+            <li>
+            <li>
+                <audio id="sound2" src="https://tuneronline.ru/audio/b3.mp3" type="audio/mpeg" loop=""></audio>
+                <button type="button" class="btn btn-primary" onClick="playSound('sound2')">Play</button>
+                <button type="button" class="btn btn-primary" onClick="stopSound('sound2')">Stop</button>
+            <li>
+            <li>
+                <audio id="sound3" src="https://tuneronline.ru/audio/g3.mp3" type="audio/mpeg" loop=""></audio>
+                <button type="button" class="btn btn-primary" onClick="playSound('sound3')">Play</button>
+                <button type="button" class="btn btn-primary" onClick="stopSound('sound3')">Stop</button>
+            <li>
+            <li>
+                <audio id="sound4" src="https://tuneronline.ru/audio/d3.mp3" type="audio/mpeg" loop=""></audio>
+                <button type="button" class="btn btn-primary" onClick="playSound('sound4')">Play</button>
+                <button type="button" class="btn btn-primary" onClick="stopSound('sound4')">Stop</button>
+            <li>
+            <li>
+                <audio id="sound5" src="https://tuneronline.ru/audio/a2.mp3" type="audio/mpeg" loop=""></audio>
+                <button type="button" class="btn btn-primary" onClick="playSound('sound5')">Play</button>
+                <button type="button" class="btn btn-primary" onClick="stopSound('sound5')">Stop</button>
+            <li>
+            <li>
+                <audio id="sound6" src="https://tuneronline.ru/audio/e2.mp3" type="audio/mpeg" loop=""></audio>
+                <button type="button" class="btn btn-primary" onClick="playSound('sound6')">Play</button>
+                <button type="button" class="btn btn-primary" onClick="stopSound('sound6')">Stop</button>
+            <li>
+        </ul>
+
+
+    </div>
+</div>
+{% endblock %}

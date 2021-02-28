@@ -2,9 +2,10 @@
 {% block content %}
 <div class="container">
     <div class="row">
+        <h1 id="name", class="mx-auto my-4">Статьи</h1>
         <div class="col-12">
             <a href="/add_article">
-                <button type="button" class="btn btn-success">
+                <button type="button" class="btn btn-success" style="background-color: #D8C3A5;">
                     Добавить статью
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
                          xmlns="http://www.w3.org/2000/svg">
@@ -17,7 +18,7 @@
             </a>
         </div>
         {% for a in articles %}
-        <div class="col-12">
+        <div class="card-body", style="background-color: #8590AA;">
             <a href="/articles/{{ a.id }}">
                 <h1>{{ a.title }}</h1></a>
             <h4>{{ a.author }}</h4>
