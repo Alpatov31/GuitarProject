@@ -7,6 +7,14 @@ from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.utils import secure_filename
 
 
+def get_base_template():
+    if current_user.is_authenticated:
+        return "base.html"
+
+    else:
+        return "base_unauthorised.html"
+
+
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
@@ -63,9 +71,7 @@ def logout():
 @app.route('/index')
 def index():
     video = Video.query.all()
-    return render_template("index.html", video=video)
-
-
+    return render_template("index.html", video=video, base=get_base_template())
 
 
 @app.route('/chords')
@@ -73,13 +79,14 @@ def chords():
     chrds = Chord.query.all()
     chrds_grouped = {}
     chords_learned = []
-    for c in  ChordLearned.query.filter_by(user_id=current_user.id):
-        chords_learned.append(c.chord_id)
+    if current_user.is_authenticated:
+        for c in ChordLearned.query.filter_by(user_id=current_user.id):
+            chords_learned.append(c.chord_id)
     for c in chrds:
         if c.group not in chrds_grouped.keys():
             chrds_grouped[c.group] = []
         chrds_grouped[c.group].append(c)
-    return render_template("chords.html", chrds_grouped=chrds_grouped, learned=chords_learned)
+    return render_template("chords.html", chrds_grouped=chrds_grouped, learned=chords_learned, base=get_base_template())
 
 
 @app.route('/add_chord', methods=["GET", "POST"])
@@ -99,7 +106,8 @@ def add_chord():
         db.session.commit()
         return redirect("/chords")
     else:
-        return render_template("add_chord.html")
+        return render_template("add_chord.html", base=get_base_template())
+
 
 @app.route('/chords/<int:id>', methods=["GET", "POST"])
 def chord(id):
@@ -108,20 +116,19 @@ def chord(id):
         db.session.add(c)
         db.session.commit()
     c = Chord.query.get(id)
-    return render_template("chord.html", c=c)
-
+    return render_template("chord.html", c=c, base=get_base_template())
 
 
 @app.route('/songs')
 def songs():
     songs = Song.query.all()
-    return render_template("songs.html", songs=songs)
+    return render_template("songs.html", songs=songs, base=get_base_template())
 
 
 @app.route('/articles')
 def articles():
     articles = Article.query.all()
-    return render_template("articles.html", articles=articles)
+    return render_template("articles.html", articles=articles, base=get_base_template())
 
 
 @app.route('/add_article', methods=["GET", "POST"])
@@ -131,7 +138,7 @@ def add_article():
         title = request.form["title"]
         # theme = request.form["theme"]
         text = request.form["text"]
-        a = Article(title=title, text=text, points=0, author=current_user.username)
+        a = Article(title=title, text=text, points=0, author=current_user.username, base=get_base_template())
         db.session.add(a)
         db.session.commit()
         return redirect("/articles")
@@ -142,13 +149,13 @@ def add_article():
 @app.route('/articles/<int:id>')
 def article(id):
     a = Article.query.get(id)
-    return render_template("article.html", article=a)
+    return render_template("article.html", article=a, base=get_base_template())
 
 
 @app.route('/songs/<int:id>')
 def song(id):
     s = Song.query.get(id)
-    return render_template("song.html", song=s)
+    return render_template("song.html", song=s, base=get_base_template())
 
 
 @app.route('/account')
@@ -159,7 +166,7 @@ def account():
 
 @app.route('/tuner')
 def tuner():
-    return render_template("tuner.html")
+    return render_template("tuner.html", base=get_base_template())
 
 # @app.route('/add_snkrs', methods=["GET", "POST"])
 # def add_snkrs():

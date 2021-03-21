@@ -33,3 +33,27 @@
 .title {
     color: #8590AA;
 }
+
+.profile-text {
+    color: black;
+}
+
+.level, .points{
+    overflow: hidden;
+}
+
+.level{
+    margin-right: 20px;
+}
+
+.art-btn{
+    margin-bottom: 20px;
+}
+
+.navbar-brand{
+    color: #8E8D8A;
+}
+
+.note{
+    color: #8E8D8A;
+}
